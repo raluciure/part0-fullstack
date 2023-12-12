@@ -1,0 +1,15 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    Note right of browser: The user writes his note in the text field
+
+    browser->>browser: Clicks "Save" button
+    Note right of browser: JavaScript code handles the form submit event, e.preventDefault() is called to prevent default form submission so that the data from the server will not cause a new GET request
+    Note right of browser: JavaScript code creates a new note object and the new created node is added to the notes list
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+    Note right of browser: JSON data: { "content": "Hello", "date": "timestamp" }
+    activate server
+    server-->>browser: HTTP 201 created
+    deactivate server
+    Note right of browser: There are no more requests made to the server because it uses the JavaScript code it fetched from the server
